@@ -946,4 +946,242 @@ if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
 images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
 if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async="" src="js/lazyload.min.js"></script><script>function lazyLoadThumb(e,alt,l){var t='<img data-lazy-src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"><noscript><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"></noscript>',a='<button class="play" aria-label="Reproduzir vídeo do YouTube"></button>';if(l){t=t.replace('data-lazy-','');t=t.replace('loading="lazy"','');t=t.replace(/<noscript>.*?<\/noscript>/g,'');}t=t.replace('alt=""','alt="'+alt+'"');return t.replace("ID",e)+a}function lazyLoadYoutubeIframe(){var e=document.createElement("iframe"),t="ID?autoplay=1";t+=0===this.parentNode.dataset.query.length?"":"&"+this.parentNode.dataset.query;e.setAttribute("src",t.replace("ID",this.parentNode.dataset.src)),e.setAttribute("frameborder","0"),e.setAttribute("allowfullscreen","1"),e.setAttribute("allow","accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"),this.parentNode.parentNode.replaceChild(e,this.parentNode)}document.addEventListener("DOMContentLoaded",function(){var exclusions=[];var e,t,p,u,l,a=document.getElementsByClassName("rll-youtube-player");for(t=0;t<a.length;t++)(e=document.createElement("div")),(u='https://i.ytimg.com/vi/ID/hqdefault.jpg'),(u=u.replace('ID',a[t].dataset.id)),(l=exclusions.some(exclusion=>u.includes(exclusion))),e.setAttribute("data-id",a[t].dataset.id),e.setAttribute("data-query",a[t].dataset.query),e.setAttribute("data-src",a[t].dataset.src),(e.innerHTML=lazyLoadThumb(a[t].dataset.id,a[t].dataset.alt,l)),a[t].appendChild(e),(p=e.querySelector(".play")),(p.onclick=lazyLoadYoutubeIframe)});</script>	<script>(()=>{class RocketElementorPreload{constructor(){this.deviceMode=document.createElement("span"),this.deviceMode.id="elementor-device-mode-wpr",this.deviceMode.setAttribute("class","elementor-screen-only"),document.body.appendChild(this.deviceMode)}t(){let t=getComputedStyle(this.deviceMode,":after").content.replace(/"/g,"");this.animationSettingKeys=this.i(t),document.querySelectorAll(".elementor-invisible[data-settings]").forEach((t=>{const e=t.getBoundingClientRect();if(e.bottom>=0&&e.top<=window.innerHeight)try{this.o(t)}catch(t){}}))}o(t){const e=JSON.parse(t.dataset.settings),i=e.m||e.animation_delay||0,n=e[this.animationSettingKeys.find((t=>e[t]))];if("none"===n)return void t.classList.remove("elementor-invisible");t.classList.remove(n),this.currentAnimation&&t.classList.remove(this.currentAnimation),this.currentAnimation=n;let o=setTimeout((()=>{t.classList.remove("elementor-invisible"),t.classList.add("animated",n),this.l(t,e)}),i);window.addEventListener("rocket-startLoading",(function(){clearTimeout(o)}))}i(t="mobile"){const e=[""];switch(t){case"mobile":e.unshift("_mobile");case"tablet":e.unshift("_tablet");case"desktop":e.unshift("_desktop")}const i=[];return["animation","_animation"].forEach((t=>{e.forEach((e=>{i.push(t+e)}))})),i}l(t,e){this.i().forEach((t=>delete e[t])),t.dataset.settings=JSON.stringify(e)}static run(){const t=new RocketElementorPreload;requestAnimationFrame(t.t.bind(t))}}document.addEventListener("DOMContentLoaded",RocketElementorPreload.run)})();</script>
 
+<!-- MODAL QUIZ -->
+<div id="quiz-modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:999999; align-items:center; justify-content:center;">
+  <div id="quiz-modal" style="background:#1a1a1a; color:#fff; width:90%; max-width:500px; border-radius:16px; padding:32px 28px; position:relative; max-height:90vh; overflow-y:auto; font-family:'Inter',sans-serif;">
+    <!-- Close button -->
+    <button onclick="closeQuiz()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#999;font-size:22px;cursor:pointer;">✕</button>
+
+    <!-- Steps indicator -->
+    <div id="quiz-steps-bar" style="display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap;"></div>
+    <div id="quiz-progress-text" style="font-size:12px;color:#aaa;margin-bottom:24px;"></div>
+
+    <!-- Step content -->
+    <div id="quiz-content"></div>
+
+    <!-- Security badge -->
+    <div style="margin-top:20px;font-size:11px;color:#666;display:flex;align-items:center;gap:6px;">
+      🔒 Dados seguros · Criptografia SSL · Sem spam
+    </div>
+  </div>
+</div>
+
+<style>
+  #quiz-modal-overlay { display:none; }
+  #quiz-modal-overlay.active { display:flex !important; }
+  .quiz-option { display:flex; align-items:center; gap:12px; background:#2a2a2a; border:2px solid transparent; border-radius:10px; padding:14px 16px; cursor:pointer; margin-bottom:10px; font-size:15px; transition:all 0.15s; }
+  .quiz-option:hover { border-color:#e0183a; }
+  .quiz-option.selected { border-color:#e0183a; background:#2f1a1e; }
+  .quiz-radio { width:18px; height:18px; border-radius:50%; border:2px solid #666; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .quiz-option.selected .quiz-radio { border-color:#e0183a; background:#e0183a; }
+  .quiz-option.selected .quiz-radio::after { content:''; width:6px; height:6px; border-radius:50%; background:#fff; }
+  .quiz-step-dot { display:flex; align-items:center; gap:6px; font-size:13px; }
+  .quiz-step-circle { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; }
+  .quiz-step-line { height:2px; width:20px; background:#444; }
+  .quiz-btn-continue { background:#e0183a; color:#fff; border:none; border-radius:50px; padding:16px 40px; font-size:15px; font-weight:800; text-transform:uppercase; cursor:pointer; letter-spacing:0.5px; transition:background 0.2s; }
+  .quiz-btn-continue:hover { background:#c0122e; }
+  .quiz-btn-continue:disabled { opacity:0.5; cursor:not-allowed; }
+  .quiz-btn-back { background:none; border:none; color:#aaa; font-size:14px; cursor:pointer; display:flex; align-items:center; gap:4px; }
+  .quiz-input { width:100%; background:#2a2a2a; border:1px solid #444; border-radius:10px; padding:14px 16px; font-size:15px; color:#fff; margin-bottom:12px; box-sizing:border-box; }
+  .quiz-input::placeholder { color:#666; }
+  .quiz-input:focus { outline:none; border-color:#e0183a; }
+  .quiz-label { font-size:13px; color:#aaa; margin-bottom:6px; display:block; }
+  .quiz-info-box { background:#2a2a2a; border-left:3px solid #e0183a; border-radius:6px; padding:12px 16px; font-size:13px; color:#ccc; margin-bottom:18px; line-height:1.5; }
+</style>
+
+<script>
+var quizData = {
+  steps: [
+    {
+      id: 'segmento',
+      label: 'Segmento',
+      title: 'Qual o segmento da sua empresa?',
+      subtitle: 'Selecione a opção que melhor representa seu negócio.',
+      type: 'options',
+      options: ['Saúde','Finanças','Jurídico','Tecnologia/SaaS','Indústria','Serviços/Mentoria','Outro'],
+      cols: 2
+    },
+    {
+      id: 'perfil',
+      label: 'Perfil',
+      title: 'Qual é o seu papel hoje na empresa?',
+      subtitle: 'Pra personalizar seu material: falamos diferente com sócio e com gerente.',
+      type: 'options',
+      options: ['Sócio / Empresário','Gerente / Líder','Colaborador','Freelancer'],
+      cols: 2
+    },
+    {
+      id: 'receita',
+      label: 'Receita',
+      title: 'Qual a receita média mensal da empresa?',
+      subtitle: 'A análise muda em cada faixa. Sem julgamento: é só pra te entregar o material certo.',
+      type: 'options',
+      options: ['Abaixo de R$30 mil','Entre R$30 mil e R$50 mil','Entre R$50 mil e R$100 mil','Entre R$100 mil e R$300 mil','Entre R$300 mil e R$500 mil','Entre R$500 mil e R$1 milhão','Acima de R$1 milhão'],
+      cols: 1
+    },
+    {
+      id: 'contato',
+      label: 'Contato',
+      title: 'Quase lá. Onde a gente te encontra?',
+      subtitle: 'O que acontece agora: o acesso à Maleta do Mentor chega no seu e-mail em minutos.',
+      type: 'contact'
+    }
+  ]
+};
+var quizAnswers = {};
+var currentStep = 0;
+
+function openQuiz() {
+  currentStep = 0;
+  quizAnswers = {};
+  document.getElementById('quiz-modal-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  renderStep();
+}
+function closeQuiz() {
+  document.getElementById('quiz-modal-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('quiz-modal-overlay').addEventListener('click', function(e){
+  if(e.target === this) closeQuiz();
+});
+
+function renderStep() {
+  var step = quizData.steps[currentStep];
+  var total = quizData.steps.length;
+
+  // Steps bar
+  var bar = '';
+  quizData.steps.forEach(function(s, i) {
+    var done = i < currentStep;
+    var active = i === currentStep;
+    var bg = done ? '#e0183a' : (active ? '#e0183a' : '#444');
+    var color = (done || active) ? '#fff' : '#888';
+    bar += '<div class="quiz-step-dot">';
+    bar += '<div class="quiz-step-circle" style="background:'+bg+';color:'+color+';">'+(i+1)+'</div>';
+    bar += '<span style="color:'+color+';font-size:12px;">'+s.label+'</span>';
+    if(i < total-1) bar += '<div class="quiz-step-line"></div>';
+    bar += '</div>';
+  });
+  document.getElementById('quiz-steps-bar').innerHTML = bar;
+  document.getElementById('quiz-progress-text').innerHTML = 'Passo '+(currentStep+1)+' de '+total+' &nbsp;·&nbsp; ~90 segundos';
+
+  // Content
+  var html = '<p style="font-size:11px;font-weight:700;color:#e0183a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">PASSO '+(currentStep+1)+' DE '+total+' · '+step.label.toUpperCase()+'</p>';
+  html += '<h2 style="font-size:24px;font-weight:800;margin:0 0 10px;line-height:1.2;">'+step.title+'</h2>';
+
+  if(step.type === 'contact') {
+    html += '<div class="quiz-info-box">'+step.subtitle+'</div>';
+    html += '<label class="quiz-label">Nome completo <span style="color:#e0183a">*</span></label>';
+    html += '<input class="quiz-input" id="q-nome" type="text" placeholder="Como podemos te chamar" value="'+(quizAnswers.nome||'')+'">';
+    html += '<label class="quiz-label">E-mail <span style="color:#e0183a">*</span></label>';
+    html += '<input class="quiz-input" id="q-email" type="email" placeholder="seu@email.com" value="'+(quizAnswers.email||'')+'">';
+    html += '<label class="quiz-label">WhatsApp <span style="color:#e0183a">*</span></label>';
+    html += '<input class="quiz-input" id="q-whatsapp" type="tel" placeholder="(00) 00000-0000" value="'+(quizAnswers.whatsapp||'')+'">';
+  } else {
+    html += '<p style="font-size:14px;color:#aaa;margin-bottom:16px;">'+step.subtitle+'</p>';
+    var selectedOption = quizAnswers[step.id] || null;
+    var optHtml = step.cols === 2
+      ? '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'
+      : '<div>';
+    step.options.forEach(function(opt) {
+      var sel = selectedOption === opt ? 'selected' : '';
+      optHtml += '<div class="quiz-option '+sel+'" onclick="selectOption(\''+step.id+'\',\''+opt.replace(/'/g,"\\'")+'\')">';
+      optHtml += '<div class="quiz-radio"></div>';
+      optHtml += '<span>'+opt+'</span></div>';
+    });
+    optHtml += '</div>';
+    html += optHtml;
+  }
+
+  // Buttons
+  html += '<div style="display:flex;align-items:center;justify-content:'+(currentStep > 0 ? 'space-between' : 'flex-end')+';margin-top:24px;">';
+  if(currentStep > 0) {
+    html += '<button class="quiz-btn-back" onclick="prevStep()">← Voltar</button>';
+  }
+  var btnLabel = currentStep < total-1 ? 'CONTINUAR →' : 'ACESSAR AGORA →';
+  var btnId = 'quiz-continue-btn';
+  html += '<button id="'+btnId+'" class="quiz-btn-continue" onclick="nextStep()">'+btnLabel+'</button>';
+  html += '</div>';
+
+  document.getElementById('quiz-content').innerHTML = html;
+  updateContinueBtn();
+}
+
+function selectOption(stepId, value) {
+  quizAnswers[stepId] = value;
+  var step = quizData.steps[currentStep];
+  document.querySelectorAll('.quiz-option').forEach(function(el) {
+    el.classList.remove('selected');
+    el.querySelector('.quiz-radio').style.borderColor = '#666';
+  });
+  var allOpts = document.querySelectorAll('.quiz-option');
+  allOpts.forEach(function(el) {
+    if(el.querySelector('span').textContent === value) {
+      el.classList.add('selected');
+    }
+  });
+  updateContinueBtn();
+  setTimeout(nextStep, 300);
+}
+
+function updateContinueBtn() {
+  var btn = document.getElementById('quiz-continue-btn');
+  if(!btn) return;
+  var step = quizData.steps[currentStep];
+  if(step.type === 'contact') {
+    btn.disabled = false;
+  } else {
+    btn.disabled = !quizAnswers[step.id];
+  }
+}
+
+function nextStep() {
+  var step = quizData.steps[currentStep];
+  if(step.type === 'contact') {
+    var nome = document.getElementById('q-nome').value.trim();
+    var email = document.getElementById('q-email').value.trim();
+    var wpp = document.getElementById('q-whatsapp').value.trim();
+    if(!nome || !email || !wpp) { alert('Por favor preencha todos os campos.'); return; }
+    quizAnswers.nome = nome;
+    quizAnswers.email = email;
+    quizAnswers.whatsapp = wpp;
+    closeQuiz();
+    window.location.href = 'https://chk.eduzz.com/2425737?utm_source=pvnova&nome='+encodeURIComponent(nome)+'&email='+encodeURIComponent(email);
+    return;
+  }
+  if(!quizAnswers[step.id]) return;
+  if(currentStep < quizData.steps.length - 1) {
+    currentStep++;
+    renderStep();
+    document.getElementById('quiz-modal').scrollTop = 0;
+  }
+}
+
+function prevStep() {
+  if(currentStep > 0) {
+    currentStep--;
+    renderStep();
+    document.getElementById('quiz-modal').scrollTop = 0;
+  }
+}
+
+// Intercept all buttons to open quiz
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('a[href*="chk.eduzz.com"], a[href="#entrega"], .header-btn, .hero-btn, .elementor-button').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      openQuiz();
+    });
+  });
+  // Also intercept the Rubens Godoy section button
+  document.querySelectorAll('a[href*="chk.eduzz"]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      openQuiz();
+    });
+  });
+});
+</script>
+
 </b></b><span id="elementor-device-mode-wpr" class="elementor-screen-only"></span></body></html><!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1790540363 -->
