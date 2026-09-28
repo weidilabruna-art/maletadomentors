@@ -177,12 +177,14 @@ var pysFacebookRest = {"restApiUrl":"https://faladantas.com.br/wp-json/pys-faceb
   }
   .hero-logo { max-width: 260px; height: auto; }
   @media (max-width: 767px) {
-    .hero-logo { max-width: 140px !important; }
-    .hero-inner { text-align: left !important; }
+    .hero-logo { max-width: 140px !important; display: block !important; margin-left: 0 !important; margin-right: auto !important; }
+    .hero-inner { text-align: left !important; align-items: flex-start !important; }
     .hero-title { text-align: left !important; margin: 0 !important; }
     .hero-subtitle { text-align: left !important; margin: 0 !important; }
     .elementor-widget-container[style*="flex-direction: column"] { align-items: flex-start !important; }
     .hero-email-hint { text-align: left !important; }
+    .hero-btn { width: 100% !important; max-width: 100% !important; text-align: center !important; display: block !important; box-sizing: border-box !important; }
+    .elementor-button-wrapper { width: 100% !important; }
   }
   /* Desktop-only hero overrides */
   @media (min-width: 768px) {
