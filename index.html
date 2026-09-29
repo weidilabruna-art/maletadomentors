@@ -123,56 +123,45 @@ var pysFacebookRest = {"restApiUrl":"https://faladantas.com.br/wp-json/pys-faceb
 <noscript><iframe src="https://stape.faladantas.com.br/ns.html?id=GTM-WKM3HQK8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <style>
-  #custom-sticky-header {
+  #urgency-top-bar {
     position: sticky;
     top: 0;
     z-index: 99999;
-    background: rgba(0, 6, 54, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background-color: #cc0000;
+    color: #ffffff;
+    padding: 12px 16px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 12px 5%;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-  #custom-sticky-header img {
-    height: 55px;
-    width: auto;
-    object-fit: contain;
-  }
-  #custom-sticky-header .header-btn {
-    display: inline-block;
-    background-color: #0ed812;
-    color: #fff !important;
-    text-decoration: none;
-    font-weight: 800;
-    font-size: 14px;
-    letter-spacing: 0.5px;
+    justify-content: center;
+    gap: 10px;
+    border-bottom: 2px solid #8b0000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.35;
+    letter-spacing: 0.6px;
     text-transform: uppercase;
-    padding: 13px 30px;
-    border-radius: 50px;
-    box-shadow: none;
-    transition: all 0.2s ease;
-    white-space: nowrap;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
   }
-  #custom-sticky-header .header-btn:hover {
-    background-color: #09b80e;
-    box-shadow: none;
-    transform: scale(1.04);
+  .urgency-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    stroke: #ffffff;
   }
   @media (max-width: 480px) {
-    #custom-sticky-header {
-      padding: 10px 4%;
+    #urgency-top-bar {
+      font-size: 11.5px;
+      padding: 10px 12px;
+      gap: 8px;
+      letter-spacing: 0.4px;
     }
-    #custom-sticky-header img {
-      height: 45px;
-    }
-    #custom-sticky-header .header-btn {
-      font-size: 11px;
-      padding: 10px 18px;
-      border-radius: 50px;
+    .urgency-icon {
+      width: 18px;
+      height: 18px;
     }
   }
   .hero-logo { max-width: 260px; height: auto; }
@@ -198,10 +187,43 @@ var pysFacebookRest = {"restApiUrl":"https://faladantas.com.br/wp-json/pys-faceb
     .hero-email-hint { display: none !important; }
   }
 </style>
-<div id="custom-sticky-header">
-  <img src="images/logo-header.png" alt="Logo">
-  <a href="https://chk.eduzz.com/2425737?utm_source=pvnova" class="header-btn">BAIXAR GRÁTIS</a>
+<div id="urgency-top-bar">
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" class="urgency-icon"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  <span id="urgency-date-text">ESSA OPORTUNIDADE EXCLUSIVA ESTARÁ DISPONÍVEL APENAS NOS DIAS 28, 29 E 30 DE SETEMBRO.</span>
 </div>
+<script>
+  (function() {
+    try {
+      var months = ['JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO', 'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'];
+      var now = new Date();
+      var d1 = new Date(now);
+      var d2 = new Date(now); d2.setDate(d2.getDate() + 1);
+      var d3 = new Date(now); d3.setDate(d3.getDate() + 2);
+      
+      var day1 = d1.getDate();
+      var day2 = d2.getDate();
+      var day3 = d3.getDate();
+      
+      var m1 = months[d1.getMonth()];
+      var m2 = months[d2.getMonth()];
+      var m3 = months[d3.getMonth()];
+      
+      var formatted = '';
+      if (m1 === m3) {
+        formatted = day1 + ', ' + day2 + ' E ' + day3 + ' DE ' + m1;
+      } else if (m1 === m2 && m2 !== m3) {
+        formatted = day1 + ' E ' + day2 + ' DE ' + m1 + ' E ' + day3 + ' DE ' + m3;
+      } else {
+        formatted = day1 + ' DE ' + m1 + ', ' + day2 + ' E ' + day3 + ' DE ' + m3;
+      }
+      
+      var el = document.getElementById('urgency-date-text');
+      if (el) {
+        el.textContent = 'ESSA OPORTUNIDADE EXCLUSIVA ESTARÁ DISPONÍVEL APENAS NOS DIAS ' + formatted + '.';
+      }
+    } catch(e) {}
+  })();
+</script>
 		<div data-elementor-type="wp-page" data-elementor-id="2838" class="elementor elementor-2838" data-elementor-post-type="page">
 				<div class="elementor-element elementor-element-284677f4 e-flex e-con-boxed e-con e-parent" data-id="284677f4" data-element_type="container" data-settings="{" background_background":"gradient"}"="" style="--min-height: auto; min-height: auto !important; padding-top: 5px; padding-bottom: 20px;">
 					<div class="e-con-inner">
